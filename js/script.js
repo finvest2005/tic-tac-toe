@@ -1,5 +1,10 @@
 document.addEventListener('keydown', keyPressed);
 const GameObject = tictactoe();
+function drawBoard(board) {
+    console.log(board.slice(0, 3));
+    console.log(board.slice(3, 6));
+    console.log(board.slice(6));
+}
 function invitePlayerToMove(playerNumber) {
     console.clear();
     console.log(`Player${ playerNumber } move`);
@@ -24,20 +29,31 @@ function keyPressed(e) {
 function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+function replaceCharInString(str, index, char) {
+    return str.substring(0, index) + char + str.substring(index + 1);
+}
 function tictactoe() {
     var self = {};
-    var currentBoard, player1Board, player2Board;
+    var currentBoard, player1Board, player1Marker, player2Board, player2Marker;
     currentBoard = '.........';
     player1Board = '000000000';
     player2Board = '000000000';
+    player1Marker = 'X';
+    player2Marker = 'O';
     console.log('Press enter to start game ...');
     self.state = 'newGame';
     function newGame_start() {
+        if (!(randomInteger(1, 2) == 1)) {
+            player1Marker = 'O';
+            player2Marker = 'X';
+        }
         if (randomInteger(1, 2) == 1) {
             invitePlayerToMove(1);
+            drawBoard(currentBoard);
             self.state = 'player1';
         } else {
             invitePlayerToMove(2);
+            drawBoard(currentBoard);
             self.state = 'player2';
         }
     }
@@ -46,7 +62,9 @@ function tictactoe() {
         self.state = undefined;
     }
     function player1_numberEntered(value) {
+        currentBoard = replaceCharInString(currentBoard, value - 1, player1Marker);
         invitePlayerToMove(2);
+        drawBoard(currentBoard);
         self.state = 'player2';
     }
     function player2_escapeEntered(value) {
@@ -54,7 +72,9 @@ function tictactoe() {
         self.state = undefined;
     }
     function player2_numberEntered(value) {
+        currentBoard = replaceCharInString(currentBoard, value - 1, player2Marker);
         invitePlayerToMove(1);
+        drawBoard(currentBoard);
         self.state = 'player1';
     }
     function escapeEntered(value) {
