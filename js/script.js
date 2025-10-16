@@ -1,8 +1,14 @@
 document.addEventListener('keydown', keyPressed);
 const GameObject = tictactoe();
+function invitePlayerToMove(playerNumber) {
+    console.clear();
+    console.log(`Player${ playerNumber } move`);
+    console.log('Enter number from 1 to 9');
+    console.log('or ESC to exit the game...');
+}
 function keyPressed(e) {
     var _selectValue_8;
-    if (e.key >= '0' && e.key <= '9') {
+    if (e.key >= '1' && e.key <= '9') {
         GameObject.numberEntered(e.key);
     } else {
         _selectValue_8 = e.key;
@@ -15,40 +21,40 @@ function keyPressed(e) {
         }
     }
 }
+function randomInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 function tictactoe() {
     var self = {};
+    var currentBoard, player1Board, player2Board;
+    currentBoard = '.........';
+    player1Board = '000000000';
+    player2Board = '000000000';
     console.log('Press enter to start game ...');
     self.state = 'newGame';
     function newGame_start() {
-        console.log('tic tac toe starting ');
-        console.log('player1 enter number from 1 to 9');
-        console.log('or ESC to exit the game...');
-        self.state = 'player1';
+        if (randomInteger(1, 2) == 1) {
+            invitePlayerToMove(1);
+            self.state = 'player1';
+        } else {
+            invitePlayerToMove(2);
+            self.state = 'player2';
+        }
     }
     function player1_escapeEntered(value) {
-        console.clear();
-        console.log('player1 entered escape ', value);
         console.log('game over');
         self.state = undefined;
     }
     function player1_numberEntered(value) {
-        console.clear();
-        console.log('player1 entered number ', value);
-        console.log('player2 enter number from 1 to 9');
-        console.log('or ESC to exit the game...');
+        invitePlayerToMove(2);
         self.state = 'player2';
     }
     function player2_escapeEntered(value) {
-        console.clear();
-        console.log('player2 entered escape ', value);
         console.log('game over');
         self.state = undefined;
     }
     function player2_numberEntered(value) {
-        console.clear();
-        console.log('player2 entered number ', value);
-        console.log('player1 enter number from 1 to 9');
-        console.log('or ESC to exit the game...');
+        invitePlayerToMove(1);
         self.state = 'player1';
     }
     function escapeEntered(value) {
