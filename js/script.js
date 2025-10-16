@@ -1,5 +1,42 @@
 document.addEventListener('keydown', keyPressed);
 const GameObject = tictactoe();
+function BoardClass() {
+    var self = {};
+    var currentBoard;
+    currentBoard = '.........';
+    function change(value, marker) {
+        currentBoard = replaceCharInString(currentBoard, value, marker);
+    }
+    function getBoard() {
+        return currentBoard;
+    }
+    self.change = change;
+    self.getBoard = getBoard;
+    return self;
+}
+function PlayerClass(marker) {
+    var self = {};
+    var playerBoard, playerMarker;
+    playerBoard = '000000000';
+    playerMarker = marker;
+    function getBoard() {
+        return playerBoard;
+    }
+    function getMarker() {
+        return playerMarker;
+    }
+    function makeMove(value) {
+        playerBoard = replaceCharInString(playerBoard, value, 1);
+    }
+    function setMarker(newMarker) {
+        playerMarker = newMarker;
+    }
+    self.getBoard = getBoard;
+    self.getMarker = getMarker;
+    self.makeMove = makeMove;
+    self.setMarker = setMarker;
+    return self;
+}
 function drawBoard(board) {
     console.log(board.slice(0, 3));
     console.log(board.slice(3, 6));
@@ -34,26 +71,26 @@ function replaceCharInString(str, index, char) {
 }
 function tictactoe() {
     var self = {};
-    var currentBoard, player1Board, player1Marker, player2Board, player2Marker;
-    currentBoard = '.........';
-    player1Board = '000000000';
-    player2Board = '000000000';
-    player1Marker = 'X';
-    player2Marker = 'O';
+    var Board, Player1, Player2;
+    Player1 = PlayerClass('X');
+    Player2 = PlayerClass('O');
+    Board = BoardClass();
     console.log('Press enter to start game ...');
     self.state = 'newGame';
     function newGame_start() {
         if (!(randomInteger(1, 2) == 1)) {
-            player1Marker = 'O';
-            player2Marker = 'X';
+            Player1.setMarker('O');
+            Player2.setMarker('X');
         }
         if (randomInteger(1, 2) == 1) {
             invitePlayerToMove(1);
-            drawBoard(currentBoard);
+            console.log(Player1.getBoard());
+            drawBoard(Board.getBoard());
             self.state = 'player1';
         } else {
             invitePlayerToMove(2);
-            drawBoard(currentBoard);
+            console.log(Player2.getBoard());
+            drawBoard(Board.getBoard());
             self.state = 'player2';
         }
     }
@@ -62,9 +99,11 @@ function tictactoe() {
         self.state = undefined;
     }
     function player1_numberEntered(value) {
-        currentBoard = replaceCharInString(currentBoard, value - 1, player1Marker);
+        Board.change(value - 1, Player1.getMarker());
+        Player1.makeMove(value - 1);
         invitePlayerToMove(2);
-        drawBoard(currentBoard);
+        console.log(Player2.getBoard());
+        drawBoard(Board.getBoard());
         self.state = 'player2';
     }
     function player2_escapeEntered(value) {
@@ -72,9 +111,11 @@ function tictactoe() {
         self.state = undefined;
     }
     function player2_numberEntered(value) {
-        currentBoard = replaceCharInString(currentBoard, value - 1, player2Marker);
+        Board.change(value - 1, Player2.getMarker());
+        Player2.makeMove(value - 1);
         invitePlayerToMove(1);
-        drawBoard(currentBoard);
+        console.log(Player1.getBoard());
+        drawBoard(Board.getBoard());
         self.state = 'player1';
     }
     function escapeEntered(value) {
