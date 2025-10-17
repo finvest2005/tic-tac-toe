@@ -10,8 +10,12 @@ function BoardClass() {
     function getBoard() {
         return currentBoard;
     }
+    function isValidMove(value) {
+        return currentBoard[+value - 1] == '.';
+    }
     self.change = change;
     self.getBoard = getBoard;
+    self.isValidMove = isValidMove;
     return self;
 }
 function PlayerClass(marker) {
@@ -100,24 +104,38 @@ function tictactoe() {
         self.state = undefined;
     }
     function player1_numberEntered(value) {
-        Board.change(value - 1, Player1.getMarker());
-        Player1.makeMove(value - 1);
-        invitePlayerToMove(2);
-        console.log(Player2.getBoard());
-        drawBoard(Board.getBoard());
-        self.state = 'player2';
+        if (Board.isValidMove(value)) {
+            Board.change(value - 1, Player1.getMarker());
+            Player1.makeMove(value - 1);
+            invitePlayerToMove(2);
+            console.log(Player2.getBoard());
+            drawBoard(Board.getBoard());
+            self.state = 'player2';
+        } else {
+            invitePlayerToMove(1);
+            console.log(Player1.getBoard());
+            drawBoard(Board.getBoard());
+            self.state = 'player1';
+        }
     }
     function player2_escapeEntered(value) {
         console.log('game over');
         self.state = undefined;
     }
     function player2_numberEntered(value) {
-        Board.change(value - 1, Player2.getMarker());
-        Player2.makeMove(value - 1);
-        invitePlayerToMove(1);
-        console.log(Player1.getBoard());
-        drawBoard(Board.getBoard());
-        self.state = 'player1';
+        if (Board.isValidMove(value)) {
+            Board.change(value - 1, Player2.getMarker());
+            Player2.makeMove(value - 1);
+            invitePlayerToMove(1);
+            console.log(Player1.getBoard());
+            drawBoard(Board.getBoard());
+            self.state = 'player1';
+        } else {
+            invitePlayerToMove(2);
+            console.log(Player2.getBoard());
+            drawBoard(Board.getBoard());
+            self.state = 'player2';
+        }
     }
     function escapeEntered(value) {
         switch (self.state) {
