@@ -38,9 +38,10 @@ function PlayerClass(marker) {
     return self;
 }
 function drawBoard(board) {
-    console.log(board.slice(0, 3));
-    console.log(board.slice(3, 6));
-    console.log(board.slice(6));
+    board = board.split('').join(' ');
+    console.log(board.slice(0, 5));
+    console.log(board.slice(6, 11));
+    console.log(board.slice(12));
 }
 function invitePlayerToMove(playerNumber) {
     console.clear();
