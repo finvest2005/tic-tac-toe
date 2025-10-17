@@ -22,3 +22,9 @@
   color: black;
   background-color: var(--bodyBackgroundColor);
 }
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
