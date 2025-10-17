@@ -4,6 +4,9 @@ function BoardClass() {
     var self = {};
     var currentBoard;
     currentBoard = '.........';
+    function areThereFreeSquares() {
+        return currentBoard.indexOf('.') > 0;
+    }
     function change(value, marker) {
         currentBoard = replaceCharInString(currentBoard, value, marker);
     }
@@ -13,6 +16,7 @@ function BoardClass() {
     function isValidMove(value) {
         return currentBoard[+value - 1] == '.';
     }
+    self.areThereFreeSquares = areThereFreeSquares;
     self.change = change;
     self.getBoard = getBoard;
     self.isValidMove = isValidMove;
@@ -137,18 +141,40 @@ function tictactoe() {
                     playerNum = 1;
                     currentPlayer = Player1;
                 }
+                if (Board.areThereFreeSquares()) {
+                    invitePlayerToMove(playerNum);
+                    console.log(`Player1(${ Player1.getMarker() }) ${ Player1.getBoard() } ${ Player1.isWinning() }`);
+                    console.log(`Player2(${ Player2.getMarker() }) ${ Player2.getBoard() } ${ Player2.isWinning() }`);
+                    drawBoard(Board.getBoard());
+                    self.state = 'playGame';
+                } else {
+                    console.log('It\'s a draw game.');
+                    Player1 = PlayerClass('X');
+                    Player2 = PlayerClass('O');
+                    Board = BoardClass();
+                    currentPlayer = '';
+                    playerNum = 1;
+                    console.log('Press enter to start new game ...');
+                    self.state = 'newGame';
+                }
+            }
+        } else {
+            if (Board.areThereFreeSquares()) {
                 invitePlayerToMove(playerNum);
                 console.log(`Player1(${ Player1.getMarker() }) ${ Player1.getBoard() } ${ Player1.isWinning() }`);
                 console.log(`Player2(${ Player2.getMarker() }) ${ Player2.getBoard() } ${ Player2.isWinning() }`);
                 drawBoard(Board.getBoard());
                 self.state = 'playGame';
+            } else {
+                console.log('It\'s a draw game.');
+                Player1 = PlayerClass('X');
+                Player2 = PlayerClass('O');
+                Board = BoardClass();
+                currentPlayer = '';
+                playerNum = 1;
+                console.log('Press enter to start new game ...');
+                self.state = 'newGame';
             }
-        } else {
-            invitePlayerToMove(playerNum);
-            console.log(`Player1(${ Player1.getMarker() }) ${ Player1.getBoard() } ${ Player1.isWinning() }`);
-            console.log(`Player2(${ Player2.getMarker() }) ${ Player2.getBoard() } ${ Player2.isWinning() }`);
-            drawBoard(Board.getBoard());
-            self.state = 'playGame';
         }
     }
     function escapeEntered(value) {
