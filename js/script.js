@@ -54,15 +54,15 @@ function invitePlayerToMove(playerNumber) {
     console.log('or ESC to exit the game...');
 }
 function keyPressed(e) {
-    var _selectValue_8;
+    var _selectValue_6;
     if (e.key >= '1' && e.key <= '9') {
         GameObject.numberEntered(e.key);
     } else {
-        _selectValue_8 = e.key;
-        if (_selectValue_8 === 'Enter') {
+        _selectValue_6 = e.key;
+        if (_selectValue_6 === 'Enter') {
             GameObject.start();
         } else {
-            if (_selectValue_8 === 'Escape') {
+            if (_selectValue_6 === 'Escape') {
                 GameObject.escapeEntered(e.key);
             }
         }
@@ -76,10 +76,12 @@ function replaceCharInString(str, index, char) {
 }
 function tictactoe() {
     var self = {};
-    var Board, Player1, Player2;
+    var Board, Player1, Player2, currentPlayer, playerNum;
     Player1 = PlayerClass('X');
     Player2 = PlayerClass('O');
     Board = BoardClass();
+    currentPlayer = '';
+    playerNum = 1;
     console.log('Press enter to start game ...');
     self.state = 'newGame';
     function newGame_start() {
@@ -88,71 +90,49 @@ function tictactoe() {
             Player2.setMarker('X');
         }
         if (randomInteger(1, 2) == 1) {
-            invitePlayerToMove(1);
-            console.log(Player1.getBoard());
-            drawBoard(Board.getBoard());
-            self.state = 'player1';
+            currentPlayer = Player1;
         } else {
-            invitePlayerToMove(2);
-            console.log(Player2.getBoard());
-            drawBoard(Board.getBoard());
-            self.state = 'player2';
+            playerNum = 2;
+            currentPlayer = Player2;
         }
+        invitePlayerToMove(playerNum);
+        console.log(currentPlayer.getBoard());
+        drawBoard(Board.getBoard());
+        self.state = 'playGame';
     }
-    function player1_escapeEntered(value) {
+    function playGame_escapeEntered(value) {
         console.log('game over');
         self.state = undefined;
     }
-    function player1_numberEntered(value) {
+    function playGame_numberEntered(value) {
         if (Board.isValidMove(value)) {
-            Board.change(value - 1, Player1.getMarker());
-            Player1.makeMove(value - 1);
-            invitePlayerToMove(2);
-            console.log(Player2.getBoard());
-            drawBoard(Board.getBoard());
-            self.state = 'player2';
-        } else {
-            invitePlayerToMove(1);
-            console.log(Player1.getBoard());
-            drawBoard(Board.getBoard());
-            self.state = 'player1';
+            Board.change(value - 1, currentPlayer.getMarker());
+            currentPlayer.makeMove(value - 1);
+            if (playerNum == 1) {
+                playerNum = 2;
+                currentPlayer = Player2;
+            } else {
+                playerNum = 1;
+                currentPlayer = Player1;
+            }
         }
-    }
-    function player2_escapeEntered(value) {
-        console.log('game over');
-        self.state = undefined;
-    }
-    function player2_numberEntered(value) {
-        if (Board.isValidMove(value)) {
-            Board.change(value - 1, Player2.getMarker());
-            Player2.makeMove(value - 1);
-            invitePlayerToMove(1);
-            console.log(Player1.getBoard());
-            drawBoard(Board.getBoard());
-            self.state = 'player1';
-        } else {
-            invitePlayerToMove(2);
-            console.log(Player2.getBoard());
-            drawBoard(Board.getBoard());
-            self.state = 'player2';
-        }
+        invitePlayerToMove(playerNum);
+        console.log(currentPlayer.getBoard());
+        drawBoard(Board.getBoard());
+        self.state = 'playGame';
     }
     function escapeEntered(value) {
         switch (self.state) {
-        case 'player1':
-            return player1_escapeEntered(value);
-        case 'player2':
-            return player2_escapeEntered(value);
+        case 'playGame':
+            return playGame_escapeEntered(value);
         default:
             return undefined;
         }
     }
     function numberEntered(value) {
         switch (self.state) {
-        case 'player1':
-            return player1_numberEntered(value);
-        case 'player2':
-            return player2_numberEntered(value);
+        case 'playGame':
+            return playGame_numberEntered(value);
         default:
             return undefined;
         }
