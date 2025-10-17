@@ -8,7 +8,11 @@ function BoardClass() {
         return currentBoard.indexOf('.') > 0;
     }
     function change(value, marker) {
+        var elem;
         currentBoard = replaceCharInString(currentBoard, value, marker);
+        elem = document.querySelector('#s' + (value + 1));
+        console.log(elem);
+        elem.innerText = marker;
     }
     function getBoard() {
         return currentBoard;
@@ -54,6 +58,13 @@ function PlayerClass(marker) {
     self.setMarker = setMarker;
     return self;
 }
+function clearHTMLBoard() {
+    var squares;
+    squares = document.querySelectorAll('.container p');
+    squares.forEach(item => {
+        item.innerText = '';
+    });
+}
 function drawBoard(board) {
     board = board.split('').join(' ');
     console.log(board.slice(0, 5));
@@ -61,10 +72,13 @@ function drawBoard(board) {
     console.log(board.slice(12));
 }
 function invitePlayerToMove(playerNumber) {
+    var elem;
     console.clear();
     console.log(`Player${ playerNumber } move`);
     console.log('Enter number from 1 to 9');
     console.log('or ESC to exit the game...');
+    elem = document.querySelector('.playerMove');
+    elem.innerText = `Player${ playerNumber } move`;
 }
 function keyPressed(e) {
     var _selectValue_10;
@@ -218,7 +232,8 @@ function tictactoe() {
 function tictactoeHTML() {
     var self = {};
     var Board, Player1, Player2, container, currentPlayer, playerNum;
-    container = document.querySelector('.container');
+    clearHTMLBoard();
+    container = document.querySelector('.main');
     container.style.visibility = 'hidden';
     Player1 = PlayerClass('X');
     Player2 = PlayerClass('O');
@@ -259,7 +274,8 @@ function tictactoeHTML() {
                 console.clear();
                 drawBoard(Board.getBoard());
                 console.log(finalMessage);
-                container = document.querySelector('.container');
+                clearHTMLBoard();
+                container = document.querySelector('.main');
                 container.style.visibility = 'hidden';
                 Player1 = PlayerClass('X');
                 Player2 = PlayerClass('O');
@@ -286,7 +302,8 @@ function tictactoeHTML() {
                     console.clear();
                     drawBoard(Board.getBoard());
                     console.log(finalMessage);
-                    container = document.querySelector('.container');
+                    clearHTMLBoard();
+                    container = document.querySelector('.main');
                     container.style.visibility = 'hidden';
                     Player1 = PlayerClass('X');
                     Player2 = PlayerClass('O');
@@ -308,7 +325,8 @@ function tictactoeHTML() {
                 console.clear();
                 drawBoard(Board.getBoard());
                 console.log(finalMessage);
-                container = document.querySelector('.container');
+                clearHTMLBoard();
+                container = document.querySelector('.main');
                 container.style.visibility = 'hidden';
                 Player1 = PlayerClass('X');
                 Player2 = PlayerClass('O');

@@ -30,7 +30,14 @@
 }
 
 .wrapper {
-  margin-top: 50px;
+  margin-top: 20px;
+  letter-spacing: 1.5px;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.header > p {
+  color: var(--headerColor);
 }
 
 .container {
@@ -42,4 +49,6 @@
 
 .container > p {
   border: 1px solid black;
+  font-size: 32px;
+  font-weight: bold;
 }
