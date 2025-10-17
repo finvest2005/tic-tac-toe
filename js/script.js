@@ -1,5 +1,5 @@
 document.addEventListener('keydown', keyPressed);
-const GameObject = tictactoe();
+const GameObject = tictactoeHTML();
 function BoardClass() {
     var self = {};
     var currentBoard;
@@ -217,15 +217,17 @@ function tictactoe() {
 }
 function tictactoeHTML() {
     var self = {};
-    var Board, Player1, Player2, currentPlayer, playerNum;
+    var Board, Player1, Player2, container, currentPlayer, playerNum;
+    container = document.querySelector('.container');
+    container.style.visibility = 'hidden';
     Player1 = PlayerClass('X');
     Player2 = PlayerClass('O');
     Board = BoardClass();
     currentPlayer = '';
     playerNum = 1;
-    console.log('Press enter to start new game ...');
     self.state = 'newGame';
     function newGame_start() {
+        container.style.visibility = 'visible';
         if (!(randomInteger(1, 2) == 1)) {
             Player1.setMarker('O');
             Player2.setMarker('X');
@@ -257,12 +259,13 @@ function tictactoeHTML() {
                 console.clear();
                 drawBoard(Board.getBoard());
                 console.log(finalMessage);
+                container = document.querySelector('.container');
+                container.style.visibility = 'hidden';
                 Player1 = PlayerClass('X');
                 Player2 = PlayerClass('O');
                 Board = BoardClass();
                 currentPlayer = '';
                 playerNum = 1;
-                console.log('Press enter to start new game ...');
                 self.state = 'newGame';
             } else {
                 if (playerNum == 1) {
@@ -283,12 +286,13 @@ function tictactoeHTML() {
                     console.clear();
                     drawBoard(Board.getBoard());
                     console.log(finalMessage);
+                    container = document.querySelector('.container');
+                    container.style.visibility = 'hidden';
                     Player1 = PlayerClass('X');
                     Player2 = PlayerClass('O');
                     Board = BoardClass();
                     currentPlayer = '';
                     playerNum = 1;
-                    console.log('Press enter to start new game ...');
                     self.state = 'newGame';
                 }
             }
@@ -304,12 +308,13 @@ function tictactoeHTML() {
                 console.clear();
                 drawBoard(Board.getBoard());
                 console.log(finalMessage);
+                container = document.querySelector('.container');
+                container.style.visibility = 'hidden';
                 Player1 = PlayerClass('X');
                 Player2 = PlayerClass('O');
                 Board = BoardClass();
                 currentPlayer = '';
                 playerNum = 1;
-                console.log('Press enter to start new game ...');
                 self.state = 'newGame';
             }
         }
