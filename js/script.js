@@ -36,7 +36,7 @@ function PlayerClass(marker) {
     function isWinning(value) {
         var result;
         result = true;
-        if (!(playerBoard === '111000000' || playerBoard === '000111000')) {
+        if (!(playerBoard === '111000000' || (playerBoard === '000111000' || playerBoard === '000000111' || playerBoard === '100100100' || playerBoard === '010010010' || playerBoard === '001001001' || playerBoard === '100010001' || playerBoard === '001010100'))) {
             result = false;
         }
         return result;
