@@ -1,11 +1,14 @@
+var pElem;
 document.addEventListener('keydown', keyPressed);
+pElem = document.querySelector('.container');
+pElem.addEventListener('click', clickSquare);
 const GameObject = tictactoeHTML();
 function BoardClass() {
     var self = {};
     var currentBoard;
     currentBoard = '.........';
     function areThereFreeSquares() {
-        return currentBoard.indexOf('.') > 0;
+        return currentBoard.includes('.');
     }
     function change(value, marker) {
         var elem;
@@ -65,6 +68,11 @@ function clearHTMLBoard() {
         item.innerText = '';
     });
 }
+function clickSquare(e) {
+    var square;
+    square = e.target.id;
+    GameObject.numberEntered(square.slice(1));
+}
 function drawBoard(board) {
     board = board.split('').join(' ');
     console.log(board.slice(0, 5));
@@ -73,7 +81,6 @@ function drawBoard(board) {
 }
 function invitePlayerToMove(playerNumber) {
     var elem;
-    console.clear();
     console.log(`Player${ playerNumber } move`);
     console.log('Enter number from 1 to 9');
     console.log('or ESC to exit the game...');
@@ -277,7 +284,6 @@ function tictactoeHTML() {
             Board.change(value - 1, currentPlayer.getMarker());
             if (currentPlayer.isWinning()) {
                 finalMessage = 'Player' + playerNum + ' win the game !!!';
-                console.clear();
                 drawBoard(Board.getBoard());
                 console.log(finalMessage);
                 clearHTMLBoard();
@@ -305,7 +311,6 @@ function tictactoeHTML() {
                     self.state = 'playGame';
                 } else {
                     finalMessage = 'It\'s a draw game.';
-                    console.clear();
                     drawBoard(Board.getBoard());
                     console.log(finalMessage);
                     clearHTMLBoard();
@@ -328,7 +333,6 @@ function tictactoeHTML() {
                 self.state = 'playGame';
             } else {
                 finalMessage = 'It\'s a draw game.';
-                console.clear();
                 drawBoard(Board.getBoard());
                 console.log(finalMessage);
                 clearHTMLBoard();
