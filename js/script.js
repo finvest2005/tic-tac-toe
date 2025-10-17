@@ -119,12 +119,16 @@ function tictactoe() {
         self.state = undefined;
     }
     function playGame_numberEntered(value) {
-        var validMove;
+        var finalMessage, validMove;
         validMove = Board.isValidMove(value);
         if (validMove) {
             currentPlayer.makeMove(value - 1);
+            Board.change(value - 1, currentPlayer.getMarker());
             if (currentPlayer.isWinning()) {
-                console.log('Player' + playerNum + ' win the game !!!');
+                finalMessage = 'Player' + playerNum + ' win the game !!!';
+                console.clear();
+                drawBoard(Board.getBoard());
+                console.log(finalMessage);
                 Player1 = PlayerClass('X');
                 Player2 = PlayerClass('O');
                 Board = BoardClass();
@@ -133,7 +137,6 @@ function tictactoe() {
                 console.log('Press enter to start new game ...');
                 self.state = 'newGame';
             } else {
-                Board.change(value - 1, currentPlayer.getMarker());
                 if (playerNum == 1) {
                     playerNum = 2;
                     currentPlayer = Player2;
@@ -148,7 +151,10 @@ function tictactoe() {
                     drawBoard(Board.getBoard());
                     self.state = 'playGame';
                 } else {
-                    console.log('It\'s a draw game.');
+                    finalMessage = 'It\'s a draw game.';
+                    console.clear();
+                    drawBoard(Board.getBoard());
+                    console.log(finalMessage);
                     Player1 = PlayerClass('X');
                     Player2 = PlayerClass('O');
                     Board = BoardClass();
@@ -166,7 +172,10 @@ function tictactoe() {
                 drawBoard(Board.getBoard());
                 self.state = 'playGame';
             } else {
-                console.log('It\'s a draw game.');
+                finalMessage = 'It\'s a draw game.';
+                console.clear();
+                drawBoard(Board.getBoard());
+                console.log(finalMessage);
                 Player1 = PlayerClass('X');
                 Player2 = PlayerClass('O');
                 Board = BoardClass();
