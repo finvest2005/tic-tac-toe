@@ -1,5 +1,4 @@
 var pElem;
-document.addEventListener('keydown', keyPressed);
 pElem = document.querySelector('.container');
 pElem.addEventListener('click', clickSquare);
 const GameObject = tictactoeHTML();
@@ -239,9 +238,7 @@ function tictactoe() {
 function tictactoeHTML() {
     var self = {};
     var Board, Player1, Player2, container, currentPlayer, playerNum;
-    clearHTMLBoard();
     container = document.querySelector('.main');
-    container.style.visibility = 'hidden';
     Player1 = PlayerClass('X');
     Player2 = PlayerClass('O');
     Board = BoardClass();
@@ -249,6 +246,7 @@ function tictactoeHTML() {
     playerNum = 1;
     self.state = 'newGame';
     function newGame_start() {
+        clearHTMLBoard();
         container.style.visibility = 'visible';
         if (!(randomInteger(1, 2) == 1)) {
             Player1.setMarker('O');
@@ -286,9 +284,7 @@ function tictactoeHTML() {
                 finalMessage = 'Player' + playerNum + ' win the game !!!';
                 drawBoard(Board.getBoard());
                 console.log(finalMessage);
-                clearHTMLBoard();
                 container = document.querySelector('.main');
-                container.style.visibility = 'hidden';
                 Player1 = PlayerClass('X');
                 Player2 = PlayerClass('O');
                 Board = BoardClass();
@@ -313,9 +309,7 @@ function tictactoeHTML() {
                     finalMessage = 'It\'s a draw game.';
                     drawBoard(Board.getBoard());
                     console.log(finalMessage);
-                    clearHTMLBoard();
                     container = document.querySelector('.main');
-                    container.style.visibility = 'hidden';
                     Player1 = PlayerClass('X');
                     Player2 = PlayerClass('O');
                     Board = BoardClass();
@@ -335,9 +329,7 @@ function tictactoeHTML() {
                 finalMessage = 'It\'s a draw game.';
                 drawBoard(Board.getBoard());
                 console.log(finalMessage);
-                clearHTMLBoard();
                 container = document.querySelector('.main');
-                container.style.visibility = 'hidden';
                 Player1 = PlayerClass('X');
                 Player2 = PlayerClass('O');
                 Board = BoardClass();
