@@ -28,3 +28,18 @@
   justify-content: center;
   align-items: center;
 }
+
+.wrapper {
+  margin-top: 50px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  border: 1px solid black;
+}
+
+.container > p {
+  border: 1px solid black;
+}
