@@ -67,15 +67,15 @@ function invitePlayerToMove(playerNumber) {
     console.log('or ESC to exit the game...');
 }
 function keyPressed(e) {
-    var _selectValue_6;
+    var _selectValue_10;
     if (e.key >= '1' && e.key <= '9') {
         GameObject.numberEntered(e.key);
     } else {
-        _selectValue_6 = e.key;
-        if (_selectValue_6 === 'Enter') {
+        _selectValue_10 = e.key;
+        if (_selectValue_10 === 'Enter') {
             GameObject.start();
         } else {
-            if (_selectValue_6 === 'Escape') {
+            if (_selectValue_10 === 'Escape') {
                 GameObject.escapeEntered(e.key);
             }
         }
@@ -88,6 +88,134 @@ function replaceCharInString(str, index, char) {
     return str.substring(0, index) + char + str.substring(index + 1);
 }
 function tictactoe() {
+    var self = {};
+    var Board, Player1, Player2, currentPlayer, playerNum;
+    Player1 = PlayerClass('X');
+    Player2 = PlayerClass('O');
+    Board = BoardClass();
+    currentPlayer = '';
+    playerNum = 1;
+    console.log('Press enter to start new game ...');
+    self.state = 'newGame';
+    function newGame_start() {
+        if (!(randomInteger(1, 2) == 1)) {
+            Player1.setMarker('O');
+            Player2.setMarker('X');
+        }
+        if (randomInteger(1, 2) == 1) {
+            currentPlayer = Player1;
+        } else {
+            playerNum = 2;
+            currentPlayer = Player2;
+        }
+        invitePlayerToMove(playerNum);
+        console.log(`Player1(${ Player1.getMarker() }) ${ Player1.getBoard() } ${ Player1.isWinning() }`);
+        console.log(`Player2(${ Player2.getMarker() }) ${ Player2.getBoard() } ${ Player2.isWinning() }`);
+        drawBoard(Board.getBoard());
+        self.state = 'playGame';
+    }
+    function playGame_escapeEntered(value) {
+        console.log('game over');
+        self.state = undefined;
+    }
+    function playGame_numberEntered(value) {
+        var finalMessage, validMove;
+        validMove = Board.isValidMove(value);
+        if (validMove) {
+            currentPlayer.makeMove(value - 1);
+            Board.change(value - 1, currentPlayer.getMarker());
+            if (currentPlayer.isWinning()) {
+                finalMessage = 'Player' + playerNum + ' win the game !!!';
+                console.clear();
+                drawBoard(Board.getBoard());
+                console.log(finalMessage);
+                Player1 = PlayerClass('X');
+                Player2 = PlayerClass('O');
+                Board = BoardClass();
+                currentPlayer = '';
+                playerNum = 1;
+                console.log('Press enter to start new game ...');
+                self.state = 'newGame';
+            } else {
+                if (playerNum == 1) {
+                    playerNum = 2;
+                    currentPlayer = Player2;
+                } else {
+                    playerNum = 1;
+                    currentPlayer = Player1;
+                }
+                if (Board.areThereFreeSquares()) {
+                    invitePlayerToMove(playerNum);
+                    console.log(`Player1(${ Player1.getMarker() }) ${ Player1.getBoard() } ${ Player1.isWinning() }`);
+                    console.log(`Player2(${ Player2.getMarker() }) ${ Player2.getBoard() } ${ Player2.isWinning() }`);
+                    drawBoard(Board.getBoard());
+                    self.state = 'playGame';
+                } else {
+                    finalMessage = 'It\'s a draw game.';
+                    console.clear();
+                    drawBoard(Board.getBoard());
+                    console.log(finalMessage);
+                    Player1 = PlayerClass('X');
+                    Player2 = PlayerClass('O');
+                    Board = BoardClass();
+                    currentPlayer = '';
+                    playerNum = 1;
+                    console.log('Press enter to start new game ...');
+                    self.state = 'newGame';
+                }
+            }
+        } else {
+            if (Board.areThereFreeSquares()) {
+                invitePlayerToMove(playerNum);
+                console.log(`Player1(${ Player1.getMarker() }) ${ Player1.getBoard() } ${ Player1.isWinning() }`);
+                console.log(`Player2(${ Player2.getMarker() }) ${ Player2.getBoard() } ${ Player2.isWinning() }`);
+                drawBoard(Board.getBoard());
+                self.state = 'playGame';
+            } else {
+                finalMessage = 'It\'s a draw game.';
+                console.clear();
+                drawBoard(Board.getBoard());
+                console.log(finalMessage);
+                Player1 = PlayerClass('X');
+                Player2 = PlayerClass('O');
+                Board = BoardClass();
+                currentPlayer = '';
+                playerNum = 1;
+                console.log('Press enter to start new game ...');
+                self.state = 'newGame';
+            }
+        }
+    }
+    function escapeEntered(value) {
+        switch (self.state) {
+        case 'playGame':
+            return playGame_escapeEntered(value);
+        default:
+            return undefined;
+        }
+    }
+    function numberEntered(value) {
+        switch (self.state) {
+        case 'playGame':
+            return playGame_numberEntered(value);
+        default:
+            return undefined;
+        }
+    }
+    function start() {
+        switch (self.state) {
+        case 'newGame':
+            return newGame_start();
+        default:
+            return undefined;
+        }
+    }
+    self.escapeEntered = escapeEntered;
+    self.numberEntered = numberEntered;
+    self.start = start;
+    return self;
+}
+function tictactoeHTML() {
     var self = {};
     var Board, Player1, Player2, currentPlayer, playerNum;
     Player1 = PlayerClass('X');
