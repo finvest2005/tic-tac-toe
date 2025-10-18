@@ -13,16 +13,18 @@
       <button type="submit" id="newGame">Start New Game</button>
     </div>
     <div class="elem">
-      <div>
-        <label for="player1Name">Player 1:</label><br />
-        <input type="text" name="player1Name" id="title" />
-      </div>
-      <div>
-        <label for="player2Name">Player 2:</label><br />
-        <input type="text" name="player2Name" id="title" />
-      </div>
+      <button type="submit" id="player1Name">Set Player1 Name</button>
+      <button type="submit" id="player2Name">Set Player2 Name</button>
     </div>
-
+    <dialog>
+      <form>
+        <div>
+          <label for="playerName">Player 1 Name:</label><br />
+          <input type="text" name="playerName" id="playerName" class="p1" />
+          <button autofocus id="playerId">Set Player Name</button>
+        </div>
+      </form>
+    </dialog>
     <div class="main">
       <div class="wrapper centered">
         <div class="header">
