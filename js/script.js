@@ -76,6 +76,11 @@ function clickSquare(e) {
     square = e.target.id;
     GameObject.numberEntered(square.slice(1));
 }
+function disableStartButton(status) {
+    var button;
+    button = document.querySelector('#newGame');
+    button.disabled = status;
+}
 function drawBoard(board) {
     board = board.split('').join(' ');
     console.log(board.slice(0, 5));
@@ -242,6 +247,7 @@ function tictactoe() {
 function tictactoeHTML() {
     var self = {};
     var Board, Player1, Player2, container, currentPlayer, playerNum;
+    disableStartButton(false);
     container = document.querySelector('.main');
     Player1 = PlayerClass('X');
     Player2 = PlayerClass('O');
@@ -251,6 +257,7 @@ function tictactoeHTML() {
     self.state = 'newGame';
     function newGame_start() {
         clearHTMLBoard();
+        disableStartButton(true);
         container.style.visibility = 'visible';
         if (!(randomInteger(1, 2) == 1)) {
             Player1.setMarker('O');
@@ -285,6 +292,7 @@ function tictactoeHTML() {
                 finalMessage = 'Player' + playerNum + ' win the game !!!';
                 drawBoard(Board.getBoard());
                 console.log(finalMessage);
+                disableStartButton(false);
                 container = document.querySelector('.main');
                 Player1 = PlayerClass('X');
                 Player2 = PlayerClass('O');
@@ -310,6 +318,7 @@ function tictactoeHTML() {
                     finalMessage = 'It\'s a draw game.';
                     drawBoard(Board.getBoard());
                     console.log(finalMessage);
+                    disableStartButton(false);
                     container = document.querySelector('.main');
                     Player1 = PlayerClass('X');
                     Player2 = PlayerClass('O');
@@ -330,6 +339,7 @@ function tictactoeHTML() {
                 finalMessage = 'It\'s a draw game.';
                 drawBoard(Board.getBoard());
                 console.log(finalMessage);
+                disableStartButton(false);
                 container = document.querySelector('.main');
                 Player1 = PlayerClass('X');
                 Player2 = PlayerClass('O');
