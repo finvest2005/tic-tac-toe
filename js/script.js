@@ -1,6 +1,10 @@
-var pElem;
+var pElem, startGameButton;
 pElem = document.querySelector('.container');
 pElem.addEventListener('click', clickSquare);
+startGameButton = document.querySelector('#newGame');
+startGameButton.addEventListener('click', () => {
+    GameObject.start();
+});
 const GameObject = tictactoeHTML();
 function BoardClass() {
     var self = {};
