@@ -107,15 +107,19 @@ function PlayerClass(marker, playerName) {
     return self;
 }
 function callBackEnterName(e) {
-    var _selectValue_8, playerName;
+    var _selectValue_8, displayName1, displayName2, playerName;
     dialog = document.querySelector('dialog');
     playerName = document.querySelector('#playerName');
+    displayName1 = document.querySelector('.game1Name');
+    displayName2 = document.querySelector('.game2Name');
     _selectValue_8 = playerName.className;
     if (_selectValue_8 === 'p1') {
         Player1.setName(playerName.value);
+        displayName1.innerText = playerName.value;
     } else {
         if (_selectValue_8 === 'p2') {
             Player2.setName(playerName.value);
+            displayName2.innerText = playerName.value;
         }
     }
     e.preventDefault();
@@ -131,7 +135,6 @@ function callBackPlayerName1(e) {
     label.innerText = 'Player1 name';
     dialog = document.querySelector('dialog');
     dialog.showModal();
-    Player1.setName(playerName);
 }
 function callBackPlayerName2(e) {
     var label, playerName;
@@ -157,11 +160,12 @@ function clickSquare(e) {
     GameObject.numberEntered(square.slice(1));
 }
 function disableButtons(status) {
-    var button, statusbutton;
+    var button;
     button = document.querySelector('#newGame');
     button.disabled = status;
     button = document.querySelector('#player1Name');
-    button.disabled = statusbutton = document.querySelector('#player2Name');
+    button.disabled = status;
+    button = document.querySelector('#player2Name');
     button.disabled = status;
 }
 function displayGameResult(message) {

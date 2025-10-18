@@ -97,3 +97,22 @@ div input {
   gap: 50px;
   padding-top: 10px;
 }
+
+.centerDialog {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+dialog {
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 350px;
+  padding: 0;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.5);
+}
+
+form > div {
+  padding: 20px 30px;
+}
