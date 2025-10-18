@@ -269,13 +269,10 @@ function tictactoeHTML() {
         self.state = 'playGame';
     }
     function playGame_escapeEntered(value) {
-        var elem;
         clearHTMLBoard();
         console.log('game over');
         container = document.querySelector('.main');
         container.style.visibility = 'hidden';
-        elem = document.querySelector('.gamestatus');
-        elem.innerText = 'game over !!!!';
         self.state = undefined;
     }
     function playGame_numberEntered(value) {
