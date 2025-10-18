@@ -81,6 +81,11 @@ function disableStartButton(status) {
     button = document.querySelector('#newGame');
     button.disabled = status;
 }
+function displayGameResult(message) {
+    var elem;
+    elem = document.querySelector('.playerMove');
+    elem.innerText = message;
+}
 function drawBoard(board) {
     board = board.split('').join(' ');
     console.log(board.slice(0, 5));
@@ -292,6 +297,7 @@ function tictactoeHTML() {
                 finalMessage = 'Player' + playerNum + ' win the game !!!';
                 drawBoard(Board.getBoard());
                 console.log(finalMessage);
+                displayGameResult(finalMessage);
                 disableStartButton(false);
                 container = document.querySelector('.main');
                 Player1 = PlayerClass('X');
@@ -318,6 +324,7 @@ function tictactoeHTML() {
                     finalMessage = 'It\'s a draw game.';
                     drawBoard(Board.getBoard());
                     console.log(finalMessage);
+                    displayGameResult(finalMessage);
                     disableStartButton(false);
                     container = document.querySelector('.main');
                     Player1 = PlayerClass('X');
@@ -339,6 +346,7 @@ function tictactoeHTML() {
                 finalMessage = 'It\'s a draw game.';
                 drawBoard(Board.getBoard());
                 console.log(finalMessage);
+                displayGameResult(finalMessage);
                 disableStartButton(false);
                 container = document.querySelector('.main');
                 Player1 = PlayerClass('X');
