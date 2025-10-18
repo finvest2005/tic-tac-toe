@@ -81,3 +81,19 @@ button[disabled] {
   background-color: #cccccc;
   color: #666666;
 }
+
+div input {
+  height: 30px;
+  font-size: 14px;
+  padding: 2px 5px;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-top: 5px;
+}
+
+.elem {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  padding-top: 30px;
+}
